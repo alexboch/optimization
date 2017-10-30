@@ -1,11 +1,17 @@
-// Optimization.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
+#include "Optimization.h"
 
 
-int main()
+vector<double> Optimize(vector<double> x0,double (*f)(vector<double>), vector<double> (*grad)(vector<double>), double step, double eps, int maxIter)
 {
-    return 0;
+	vector<double> optArgs=x0;//вектор с аргументами, при которых значение ф-и минимально
+	for(int i=0;i<maxIter;i++)
+	{
+		vector<double> newArgs = optArgs - step*grad(optArgs);//новый вектор аргументов функции
+		double d = abs(f(newArgs) - f(optArgs));
+		if (d < eps)//критерий останова
+			return optArgs;
+		optArgs = newArgs;
+	}
+	return optArgs;
 }
-
