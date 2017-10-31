@@ -12,9 +12,9 @@
 using namespace boost::assign;
 int main()
 {
-	const double step = 1.5;
-	const double eps = 1e-5;
-	const int maxIter = 1e+8;
+	double step = 1.5;
+	double eps = 1e-5;
+	int maxIter = 1e+8;
 	vector<double> x0(2);// начальные условия
 	x0[0] = 1;
 	x0[1] = 0;
