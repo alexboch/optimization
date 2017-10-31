@@ -20,3 +20,12 @@ vector<double> ComputeGradient(vector<double> x,double(*f)(vector<double>))
 	}
 	return grad;
 }
+
+vector<double> RosenGrad(vector<double> x)
+{
+	vector<double> grad(2);
+	grad[0] = 2 * (200 * x[0] * x[0] * x[0] - 200 * x[0] * x[1] + x[0] - 1);
+	grad[1] = -200 * (x[0] * x[0] - x[1]);
+	return grad;
+}
+

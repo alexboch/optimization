@@ -18,7 +18,7 @@ double Valley(vector<double> x)
 
 double Powell(vector<double> x)
 {
-	return (x[0] + 10 * x[1] * x[1]) * 2 + 5 * (x[2] - x[3]) * 2 + pow(x[1] - 2 * x[2], 4) + 10 * pow(x[0] - x[3], 4);
+	return pow((x[0] + 10 * x[1] * x[1]),2) + 5 * pow((x[2] - x[3]) , 2) + pow(x[1] - 2 * x[2], 4) + 10 * pow(x[0] - x[3], 4);
 }
 
 double LMS(vector<double> x)

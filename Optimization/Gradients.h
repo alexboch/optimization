@@ -8,3 +8,5 @@ using namespace boost::numeric::ublas;
 vector<double> ComputeGradient(vector<double> x,double(*f)(vector<double>));
 
 vector<double> QuadGrad(vector<double> args);//градиент квадратичной функции
+
+vector<double> RosenGrad(vector<double> x);//Градиент функции Розенброка
