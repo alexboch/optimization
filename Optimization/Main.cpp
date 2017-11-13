@@ -14,18 +14,19 @@ using namespace boost::assign;
 int main()
 {
 	double step = 1;//Шаг
-	double eps = 1e-6;
+	double eps = 1e-9;
+	double stepEps = 0.001;
 	int maxIter = 1e+5;
+	double sf = 0.5;//величина дробления шага
 	setlocale(LC_CTYPE, "rus"); // вызов функции настройки локали
 #pragma region 1.	Квадратичная функция 
 	vector<double> x0(2);// начальные условия
 	x0[0] = 1;
 	x0[1] = 0;
-	
 	OptInfo xs=Optimize(x0,Quad,[] (vector<double> x)
 	{
 		return ComputeGradient(x, Quad);
-	},step,eps,maxIter);
+	},step,eps,maxIter,sf,stepEps);
 	std::cout <<"Квадратичная функция:"<<std::endl<< xs<<std::endl;
 #pragma endregion
 #pragma region 2.	Функция Розенброка
@@ -35,17 +36,16 @@ int main()
 	{
 		return ComputeGradient(x, Rozenbrock);
 	}, 0.001, eps, maxIter);*/
-	xs = Optimize(x0, Rozenbrock,RosenGrad, 0.001, eps, maxIter);
+	xs = Optimize(x0, Rozenbrock,RosenGrad, step, eps, maxIter,sf,stepEps);
 	std::cout <<"Функция Розенброка\n"<< xs<<std::endl;
 #pragma endregion
 #pragma region 3.	Ассиметричная долинаs
-	step = 0.001;
 	x0[0] = 0;
 	x0[1] = -1;
 	xs = Optimize(x0, Valley, [](vector<double> x)
 	{
 		return ComputeGradient(x, Valley);
-	}, step, eps, maxIter);
+	}, step, eps, maxIter,sf,stepEps);
 	std::cout << "Ассиметричная долина\n" << xs << std::endl;
 #pragma endregion 
 #pragma region 4.	Функция Пауэлла
@@ -58,7 +58,7 @@ int main()
 	xs = Optimize(x0, Powell, [](vector<double> x)
 	{
 		return ComputeGradient(x, Powell);
-	}, 0.001, eps, maxIter);
+	}, step, eps, maxIter,sf,stepEps);
 	std::cout << "Функция Пауэлла\n" << xs << std::endl;
 #pragma endregion
 #pragma region 5.	Пример, связанный с оценкой экспериментальных данных методом наименьших квадратов
@@ -69,7 +69,7 @@ int main()
 	xs = Optimize(x0, LMS, [](vector<double> x)
 	{
 		return ComputeGradient(x, LMS);
-	}, 0.0001, eps, maxIter);
+	}, step, eps, maxIter,sf,stepEps);
 	std::cout << "Метод наименьших квадратов\n" << xs << std::endl;
 #pragma endregion 
 	system("PAUSE");
