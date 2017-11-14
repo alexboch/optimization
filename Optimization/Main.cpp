@@ -72,6 +72,12 @@ int main()
 	}, step, eps, maxIter,sf,stepEps);
 	std::cout << "Метод наименьших квадратов\n" << xs << std::endl;
 #pragma endregion 
+
+	/*double x = GoldenSectionSearch(5, -10, 10, [](double x)
+	{
+		return x*x;
+	},0.01
+	);*/
 	system("PAUSE");
     return 0;
 }

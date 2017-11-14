@@ -38,3 +38,20 @@ OptInfo Optimize(vector<double> x0, double(*f)(vector<double>), vector<double>(*
 	}
 	return OptInfo(val, optArgs, iters, values);
 }
+
+const double GoldenRatio = (1 + sqrt(5)) / 2.0;
+double GoldenSectionSearch(double x,double a, double b, double(*f)(double), double eps)
+{
+	while (abs(b - a) >= eps)
+	{
+		double x1 = b - (b - a) / GoldenRatio;
+		double x2 = a + (b - a) / GoldenRatio;
+		double y1 = f(x1);
+		double y2 = f(x2);
+		if (y1 >= y2)
+			a = x1;
+		else
+			b = x2;
+	}
+	return (a + b) / 2;
+}
