@@ -26,7 +26,7 @@ int main()
 	OptInfo xs=Optimize(x0,Quad,[] (vector<double> x)
 	{
 		return ComputeGradient(x, Quad);
-	},step,eps,maxIter,sf,stepEps);
+	},step,eps,maxIter);
 	std::cout <<"Квадратичная функция:"<<std::endl<< xs<<std::endl;
 #pragma endregion
 #pragma region 2.	Функция Розенброка
@@ -36,7 +36,7 @@ int main()
 	{
 		return ComputeGradient(x, Rozenbrock);
 	}, 0.001, eps, maxIter);*/
-	xs = Optimize(x0, Rozenbrock,RosenGrad, step, eps, maxIter,sf,stepEps);
+	xs = Optimize(x0, Rozenbrock,RosenGrad, step, eps, maxIter);
 	std::cout <<"Функция Розенброка\n"<< xs<<std::endl;
 #pragma endregion
 #pragma region 3.	Ассиметричная долинаs
@@ -45,7 +45,7 @@ int main()
 	xs = Optimize(x0, Valley, [](vector<double> x)
 	{
 		return ComputeGradient(x, Valley);
-	}, step, eps, maxIter,sf,stepEps);
+	}, step, eps, maxIter);
 	std::cout << "Ассиметричная долина\n" << xs << std::endl;
 #pragma endregion 
 #pragma region 4.	Функция Пауэлла
@@ -58,7 +58,7 @@ int main()
 	xs = Optimize(x0, Powell, [](vector<double> x)
 	{
 		return ComputeGradient(x, Powell);
-	}, step, eps, maxIter,sf,stepEps);
+	}, step, eps, maxIter);
 	std::cout << "Функция Пауэлла\n" << xs << std::endl;
 #pragma endregion
 #pragma region 5.	Пример, связанный с оценкой экспериментальных данных методом наименьших квадратов
@@ -69,8 +69,9 @@ int main()
 	xs = Optimize(x0, LMS, [](vector<double> x)
 	{
 		return ComputeGradient(x, LMS);
-	}, step, eps, maxIter,sf,stepEps);
-	std::cout << "Метод наименьших квадратов\n" << xs << std::endl;
+	}, step, eps/10, maxIter);
+	std::cout << "Метод наименьших квадратов, мин.точка:\n" << xs.MinVector << std::endl;
+	std::cout <<"Мин. значение:"<<xs.MinValue*10000;
 #pragma endregion 
 
 	/*double x = GoldenSectionSearch(5, -10, 10, [](double x)

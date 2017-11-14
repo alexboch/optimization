@@ -9,3 +9,4 @@ double Rozenbrock(vector<double> args);
 double Valley(vector<double> args);//Асимметричная долина
 double Powell(vector<double> args);//Пауэлла
 double LMS(vector<double> args);//Наименьших квадратов
+double LMS_0(vector<double> x);

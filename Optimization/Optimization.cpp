@@ -3,7 +3,7 @@
 
 
 OptInfo Optimize(vector<double> x0, double(*f)(vector<double>), vector<double>(*grad)(vector<double>), 
-	double step0, double eps, int maxIter, double stepFraction,double stepEps)
+	double step0, double eps, int maxIter)
 {
 	vector<double> optArgs = x0;//вектор с аргументами, при которых значение ф-и минимально
 	double val = f(optArgs);
@@ -14,15 +14,23 @@ OptInfo Optimize(vector<double> x0, double(*f)(vector<double>), vector<double>(*
 	{
 		double step = step0;
 		vector<double> g = grad(optArgs);//градиент
+		
+		step = GoldenSectionSearch(step0, 0, 5,//Оптимизация шага методом золотого сечения
+			[&](double s) {
+			return f(optArgs - s*g);
+		}, 0.001);
+		
 		vector<double> newArgs = optArgs - step*g;
 		double newVal = f(newArgs);
-		while (newVal > val - stepEps*step*norm_2(g))
+
+
+		/*while (newVal > val - stepEps*step*norm_2(g))
 		{
 			step *= stepFraction;
 			newArgs = optArgs - step*g;
 			newVal = f(newArgs);
 
-		}
+		}*/
 		double d = abs(newVal - val);
 		if (d < eps)//критерий останова
 		{
@@ -40,7 +48,7 @@ OptInfo Optimize(vector<double> x0, double(*f)(vector<double>), vector<double>(*
 }
 
 const double GoldenRatio = (1 + sqrt(5)) / 2.0;
-double GoldenSectionSearch(double x,double a, double b, double(*f)(double), double eps)
+double GoldenSectionSearch(double x,double a, double b, std::function<double(double)> f, double eps)
 {
 	while (abs(b - a) >= eps)
 	{

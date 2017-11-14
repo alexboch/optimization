@@ -37,5 +37,11 @@ double LMS(vector<double> x)
 		double s1 = (x[0] * x[0] + x[1] * x[1] * a[i] + x[2] * x[2] * a[i] * a[i])/(1+x[3]*x[3]*a[i])-b[i];
 		s += (s1 / b[i])*(s1 / b[i]);
 	}
-	return s * 10000;
+	//return s * 10000;
+	return s;
+}
+
+double LMS_0(vector<double> x)
+{
+	return (x[0]*x[0]+x[1]*x[1]+x[2]*x[2])/(1+x[3]);
 }
