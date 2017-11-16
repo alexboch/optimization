@@ -21,7 +21,7 @@ OptInfo::~OptInfo()
 
 std::ostream& operator<<(std::ostream& os, const OptInfo& opt)
 {
-	os << "Mimimum value:" << opt.MinValue << std::endl;
-	os << "Minimum vector:" << opt.MinVector;
+	os << "Минимальное значение:" << opt.MinValue << std::endl;
+	os << "Минимальная точка:" << opt.MinVector;
 	return os;
 }

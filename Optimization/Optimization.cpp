@@ -3,7 +3,7 @@
 
 
 OptInfo Optimize(vector<double> x0, double(*f)(vector<double>), vector<double>(*grad)(vector<double>), 
-	double step0, double eps, int maxIter)
+	double step0, double eps, int maxIter,double maxStep)
 {
 	vector<double> optArgs = x0;//вектор с аргументами, при которых значение ф-и минимально
 	double val = f(optArgs);
@@ -15,10 +15,10 @@ OptInfo Optimize(vector<double> x0, double(*f)(vector<double>), vector<double>(*
 		double step = step0;
 		vector<double> g = grad(optArgs);//градиент
 		
-		step = GoldenSectionSearch(step0, 0, 5,//Оптимизация шага методом золотого сечения
+		step = GoldenSectionSearch(step0, 0, maxStep,//Оптимизация шага методом золотого сечения
 			[&](double s) {
 			return f(optArgs - s*g);
-		}, 0.001);
+		}, 1e-5);
 		
 		vector<double> newArgs = optArgs - step*g;
 		double newVal = f(newArgs);
@@ -31,7 +31,8 @@ OptInfo Optimize(vector<double> x0, double(*f)(vector<double>), vector<double>(*
 			newVal = f(newArgs);
 
 		}*/
-		double d = abs(newVal - val);
+		//double d = abs(newVal - val);
+		double d = norm_2(newArgs - optArgs);
 		if (d < eps)//критерий останова
 		{
 			//return optArgs;

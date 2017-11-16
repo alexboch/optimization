@@ -10,3 +10,9 @@ vector<double> ComputeGradient(vector<double> x,double(*f)(vector<double>));
 vector<double> QuadGrad(vector<double> args);//градиент квадратичной функции
 
 vector<double> RosenGrad(vector<double> x);//Градиент функции Розенброка
+
+vector<double> ValleyGrad(vector<double> x);//Градиент асимметричной долины
+
+vector<double> PowellGrad(vector<double> x);//Градиент функции Пауэлла
+
+vector<double> LMSGrad(vector<double> x);//Градиент для метода наименьших квадратов
