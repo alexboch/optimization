@@ -46,9 +46,10 @@ vector<double> LMSGrad(vector<double> x)
 {
 	vector<double> grad(x.size());
 	const int n = 7;
-	double a[n] = { 0,0.428,1,1.61,2.09,3.48,5.25 };
+	double a[n] = { 0,0.428e-3,1e-3,1.61e-3,2.09e-3,3.48e-3,5.25e-3 };
 	double b[n] = { 7.391,11.18,16.44,16.20,22.2,24.02,31.32 };
-	for (int i = 0; i < n; i++) a[i] /= 1000;
+	for (int i = 0; i < grad.size(); i++)
+		grad[i] = 0;
 	for (int i = 0; i < n; i++)
 	{
 		double g = G(x, a[i], b[i]);
@@ -56,6 +57,10 @@ vector<double> LMSGrad(vector<double> x)
 		double s2 = a[i]*x[1] * g;
 		double s3 = a[i] * a[i] *x[2]* g;
 		double s4 = -1 * (a[i] * x[3] * (a[i] * (a[i] * x[2] * x[2]) + x[0] * x[0])*g / (pow(a[i] * x[3] * x[3] + 1, 3)));
+		grad[0] += s1;
+		grad[1] += s2;
+		grad[2] += s3;
+		grad[3] += s4;
 	}
 	return grad*2;
 }
